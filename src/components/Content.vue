@@ -1,9 +1,34 @@
-<script></script>
+<script>
+import axios from "axios";
+import PlayersIndex from "./PlayersIndex.vue";
 
-<template>
-  <main>
-    <h1>Welcome to Vue!</h1>
-  </main>
-</template>
+  export default {
+    components: {
+      PlayersIndex,
+    },
+    data: function () {
+      return {
+        players: [],
+      };
+    },
+    created: function () {
+      this.handleIndexPlayers();
+    },
+    methods: {
+      handleIndexPlayers: function () {
+        axios.get("http://localhost:3000/players.json").then((response) => {
+          console.log("players index", response);
+          this.players = response.data;
+        });
+      },
+    },
+  };
+  </script>
 
-<style></style>
+  <template>
+    <main>
+      <PlayersIndex v-bind:players="players" />
+    </main>
+  </template>
+
+  <style></style>
